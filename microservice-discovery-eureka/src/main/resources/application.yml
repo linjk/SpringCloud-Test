@@ -3,6 +3,13 @@
 spring:
   application:
     name: microservice-discovery-eureka
+security:
+  basic:
+    enabled: true
+  user:
+    name: linjk
+    password: ljk121
+
 
 ---
 
@@ -17,7 +24,7 @@ eureka:
     hostname: peer1
   client:
     service-url:
-      defaultZone: http://peer2:8762/eureka/
+      defaultZone: http://linjk:ljk121@peer2:8762/eureka/
 
 ---
 
@@ -32,4 +39,4 @@ eureka:
     hostname: peer2
   client:
     service-url:
-      defaultZone: http://peer1:8761/eureka/
+      defaultZone: http://linjk:ljk121@peer1:8761/eureka/
