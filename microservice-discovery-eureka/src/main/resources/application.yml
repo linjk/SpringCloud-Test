@@ -1,13 +1,35 @@
+# Usage: java -jar microservice-discovery-eureka.jar --spring.profile.active=peer1(2)
+
+spring:
+  application:
+    name: microservice-discovery-eureka
+
+---
+
+spring:
+  profiles: peer1
+
 server:
   port: 8761
 
-# 说明：
-# 1. register-with-eureka： 不把自己注册到erueka，因为已经是其本身
-# 2. fetch-registry      ： 不从eureka server获取注册信息，目前只有一个节点
-# 3. defaultZone         ： 配置服务中心的地址
 eureka:
+  instance:
+    hostname: peer1
   client:
-    register-with-eureka: false
-    fetch-registry: false
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://peer2:8762/eureka/
+
+---
+
+spring:
+  profiles: peer2
+
+server:
+  port: 8762
+
+eureka:
+  instance:
+    hostname: peer2
+  client:
+    service-url:
+      defaultZone: http://peer1:8761/eureka/
