@@ -22,6 +22,8 @@ server:
 eureka:
   instance:
     hostname: peer1
+    metadata-map:
+      my-metadata: peer1
   client:
     service-url:
       defaultZone: http://linjk:ljk121@peer2:8762/eureka/
@@ -37,6 +39,8 @@ server:
 eureka:
   instance:
     hostname: peer2
+    metadata-map:
+          my-metadata: peer2
   client:
     service-url:
       defaultZone: http://linjk:ljk121@peer1:8761/eureka/
