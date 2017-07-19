@@ -1,7 +1,11 @@
+spring:
+  application:
+    name: microservice-simple-provider-user
+
 server:
   port: 8000
 
-# 配置http://localhost:8000/info节点显示的信息
+
 info:
   app:
     name: @project.artifactId@
@@ -9,3 +13,10 @@ info:
     java:
       source: @java.version@
       target: @java.version@
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
