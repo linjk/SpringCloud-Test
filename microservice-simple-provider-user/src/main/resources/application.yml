@@ -1,2 +1,11 @@
 server:
   port: 8000
+
+# 配置http://localhost:8000/info节点显示的信息
+info:
+  app:
+    name: @project.artifactId@
+    encoding: @project.build.sourceEncoding@
+    java:
+      source: @java.version@
+      target: @java.version@
