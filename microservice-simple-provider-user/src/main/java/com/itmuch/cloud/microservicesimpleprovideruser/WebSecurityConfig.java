@@ -52,12 +52,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     class CustomUserDetailsService implements UserDetailsService {
         @Override
         public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-            if ("linjk".equals(username)) {
-                System.out.println("input linjk...");
-                return new SecurityUser("linjk", "ljk121", "user-role");
+            if ("user".equals(username)) {
+                return new SecurityUser("user", "ljk121", "user-role");
             }
             else if ("admin".equals(username)) {
-                System.out.println("input admin...");
                 return new SecurityUser("admin", "ljk121121", "admin-role");
             }
             else {

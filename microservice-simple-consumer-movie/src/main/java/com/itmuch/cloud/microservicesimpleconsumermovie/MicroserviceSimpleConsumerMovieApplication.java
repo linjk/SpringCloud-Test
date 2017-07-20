@@ -13,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
  * */
 @EnableDiscoveryClient
 @SpringBootApplication
-@EnableFeignClients
 public class MicroserviceSimpleConsumerMovieApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MicroserviceSimpleConsumerMovieApplication.class, args);

@@ -1,32 +1,54 @@
 package com.itmuch.cloud.microservicesimpleconsumermovie;
 
+import feign.Client;
+import feign.Contract;
+import feign.Feign;
+import feign.auth.BasicAuthRequestInterceptor;
+import feign.codec.Decoder;
+import feign.codec.Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.netflix.feign.FeignClientsConfiguration;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 /**
  * Created by admin on 2017-07-18.
  */
+@Import(FeignClientsConfiguration.class)
 @RestController
 public class MovieController {
-    @Autowired
-    private DiscoveryClient discoveryClient;
-
-    @Autowired
     private UserFeignClient userFeignClient;
 
-    @GetMapping("/user/{id}")
-    public User findById(@PathVariable Long id) {
+    private UserFeignClient adminFeignClient;
+
+    @Autowired
+    public MovieController(Decoder decoder, Encoder encoder, Client client, Contract contract) {
+        this.userFeignClient = Feign.builder()
+                .client(client)
+                .encoder(encoder)
+                .decoder(decoder)
+                .contract(contract)
+                .requestInterceptor(new BasicAuthRequestInterceptor("user", "ljk121"))
+                .target(UserFeignClient.class, "http://microservice-simple-provider-user/");
+
+        this.adminFeignClient = Feign.builder()
+                .client(client)
+                .encoder(encoder)
+                .decoder(decoder)
+                .contract(contract)
+                .requestInterceptor(new BasicAuthRequestInterceptor("admin", "ljk121121"))
+                .target(UserFeignClient.class, "http://microservice-simple-provider-user/");
+    }
+
+    @GetMapping("/user-user/{id}")
+    public User findByIdUser(@PathVariable Long id) {
         return this.userFeignClient.findById(id);
     }
 
-    @GetMapping("/user-instance")
-    public List<ServiceInstance> showInfo() {
-        return this.discoveryClient.getInstances("microservice-discovery-eureka");
+    @GetMapping("/user-admin/{id}")
+    public User findByIdAdmin(@PathVariable Long id) {
+        return this.adminFeignClient.findById(id);
     }
 }
