@@ -1,0 +1,11 @@
+server:
+  port: 8040
+spring:
+  application:
+    name: microservice-gateway-zuul
+eureka:
+  client:
+    service-url:
+      defaultZone: http://linjk:ljk121@peer1:8761/eureka/
+  instance:
+      prefer-ip-address: true
